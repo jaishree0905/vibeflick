@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VibeFlick | Mood-Based Movie Recommendations</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Top Navigation -->
+    <nav>
+        <div class="logo">
+            <span>🍿</span> VibeFlick
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-item">Home</a>
+          <a href="#about" class="nav-item">About</a>
+        </div>
+    </nav>
+    <!-- Main Dashboard -->
+    <main class="dashboard"> 
+        <!-- Hero Section -->
+        <header class="hero-header">
+            <h1>Movies that match your <span style="color:var(--accent);">mood</span></h1>
+            <p>Tell us how you feel, and we'll handle the rest.</p>
+        </header>
+        <!-- Mood Selection -->
+        <div class="selection-area">
+            <h3 class="section-title"> Discover Your Mood</h3>
+            <div class="mood-grid" id="mood-selector">
+                <div class="mood-card" data-mood="Happy">
+                    <span class="mood-emoji">😊</span>
+                    <span class="mood-label">Happy</span>
+                </div>
+                <div class="mood-card" data-mood="Sad">
+                    <span class="mood-emoji">😢</span>
+                    <span class="mood-label">Sad</span>
+                </div>
+                <div class="mood-card" data-mood="Romantic">
+                    <span class="mood-emoji">❤️</span>
+                    <span class="mood-label">Romantic</span>
+                </div>
+                <div class="mood-card" data-mood="Bored">
+                    <span class="mood-emoji">🥱</span>
+                    <span class="mood-label">Bored</span>
+                </div>
+                <div class="mood-card" data-mood="Stressed">
+                    <span class="mood-emoji">😖</span>
+                    <span class="mood-label">Stressed</span>
+                </div>
+                <div class="mood-card" data-mood="Lonely">
+                    <span class="mood-emoji">😔</span>
+                    <span class="mood-label">Lonely</span>
+                </div>
+                <div class="mood-card" data-mood="Excited">
+                    <span class="mood-emoji">🤩</span>
+                    <span class="mood-label">Excited</span>
+                </div>
+            </div>
+        </div>
+        <!-- Filters & Actions -->
+        <h3 class="section-title">Explore in Your Language</h3>
+        <div class="controls-container">
+            <div class="input-group">
+                <label>Preferred Language</label>
+                <select id="language" class="custom-select">
+                    <option value="any">Any Language 🌍</option>
+                    <option value="en">English</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ta">Tamil</option>
+                    <option value="ko">Korean</option>
+                    <option value="ja">Japanese</option>
+                    <option value="fr">French</option>
+                     <option value="te">Telugu</option>
+                </select>
+            </div>
+            <div class="input-group">
+                <label>Duration Constraint</label>
+                <select id="duration" class="custom-select">
+                    <option value="any">Any Duration ⏱️</option>
+                    <option value="short">Short (< 90m)</option>
+                    <option value="medium">Medium (90m - 2h)</option>
+                    <option value="long">Long (> 2h)</option>
+                </select>
+            </div>
+            <div class="actions">
+                <button id="find-movie" class="btn btn-primary">Find Movie 🎬</button>
+                <button id="surprise-me" class="btn btn-outline">Surprise Me 🎲</button>
+            </div>
+        </div>
+        <!-- Live Status Strip -->
+        <div class="stats-strip">
+            <div class="stat-item">
+                <div class="stat-icon-box">🎭</div>
+                <div class="stat-text">
+                    <h4>Current Mood</h4>
+                    <p id="current-mood">Not Selected</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon-box">🌍</div>
+                <div class="stat-text">
+                    <h4>Language</h4>
+                    <p id="current-lang">Any</p>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-icon-box">⏱️</div>
+                <div class="stat-text">
+                    <h4>Watch Time</h4>
+                    <p id="current-time">Any</p>
+                </div>
+            </div>
+        </div>
+        <!-- Results Section -->
+        <section id="result-section" class="result-section">
+            <!-- Loading State -->
+            <div id="loading" class="loader-container hidden">
+                <div class="spinner"></div>
+                <h2>Curating your experience...</h2>
+            </div>
+            <!-- Result Card -->
+            <div id="movie-card" class="movie-result-card hidden">
+                <div class="poster-box">
+                    <img id="movie-poster" src="" alt="Poster">
+                </div>
+                <div class="info-box">
+                    <h2 id="movie-title">Movie Title</h2>
+                    <div class="tags">
+                        <span class="tag" id="tag-mood">Mood</span>
+                        <span class="tag" id="tag-lang">Language</span>
+                        <span class="tag" id="tag-dur">Duration</span>
+                    </div>
+                    <p class="description" id="movie-desc">
+                        A short description of the movie will appear here, explaining why it matches your mood
+                        perfectly.
+                    </p>
+                    <button class="btn btn-primary" onclick="window.scrollTo({top:0, behavior:'smooth'})">Search
+                        Again</button>
+                </div>
+            </div>
+            <!-- Error State -->
+            <div id="error-message" class="loader-container hidden">
+                <h2 style="color: #ff6b6b">Oops! 😕</h2>
+                <p id="error-text">No movies found.</p>
+            </div>
+        </section>
+        <!-- Your existing sections ABOVE -->
+
+<!-- ✅ ADD THIS HERE (just before </main>) -->
+<section class="about-section" id="about">
+  <div class="about-container">
+    <h2>About Me</h2>
+<p>
+  Hi, I'm <strong>Ms Jai Shree Sekar</strong>, an IT student and aspiring web developer.
+  I created <strong>VibeFlick</strong> as a creative project to help users discover movies based on their mood.
+</p>
+ </div>
+<p>
+  I'm passionate about building clean, aesthetic, and user-friendly websites.
+  Currently learning and open to freelance opportunities.
+</p>
+<p class="available">✨ Available for freelance projects</p>
+<div class="about-socials">
+  <a href="https://www.instagram.com/_invitesparks_/?__pwa=1#" target="_blank"> 📸 Instagram </a>
+  <a href="https://www.linkedin.com/in/jshree1125/" target="_blank">
+    💼 Connect on LinkedIn
+  </a>
+</div>
+    <div class="about-details">
+      <div>
+        <h4>🎯 Goal</h4>
+        <p>Make movie selection simple.</p>
+      </div>
+      <div>
+        <h4>💻 Skills</h4>
+        <p>HTML, CSS, JavaScript, Python, SQL,</p>
+        <p>✨Custom Invitation Card Designs
+Website Development Services📩</p>
+      </div>
+      <div>
+        <h4>🌍 Vision</h4>
+        <p>Build smart tools for users.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+    <div id="movie-container"></div>
+</main>
+    <script src="script.js"></script>
+</body>
+</html>
